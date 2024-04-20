@@ -1,8 +1,7 @@
 class Pokemon {
-    constructor(name, front, back, stats, sound){
+    constructor(name, form, stats, sound){
         this.name = name;
-        this.front = front;
-        this.back = back;
+        this.form = form;
         this.stats = stats;
         this.sound = sound;
     }
@@ -140,15 +139,14 @@ async function playMatch(pokemons1, pokemons2) {
     document.getElementsByClassName("select-pokemon")[0].style.display = "none";
 
     document.body.style.paddingTop = "5%";
-    document.getElementsByClassName("main")[0].style.display = "flex";
+    document.getElementsByClassName("main")[0].style.display = "block";
 
     for(let i=0; i<3; i++) {
         let form = await getPokemonForm(pokemons1[i]);
         let stats = await getPokemonStats(pokemons1[i]);
         let sound = await getPokemonSound(pokemons1[i]);
         Player1.pokemons[i].name = pokemons1[i];
-        Player1.pokemons[i].front = form[0];
-        Player1.pokemons[i].back = form[1];
+        Player1.pokemons[i].form = form;
         Player1.pokemons[i].stats = stats;
         Player1.pokemons[i].sound = sound;
 
@@ -158,14 +156,13 @@ async function playMatch(pokemons1, pokemons2) {
         let stats = await getPokemonStats(pokemons2[i]);
         let sound = await getPokemonSound(pokemons2[i]);
         Player2.pokemons[i].name = pokemons2[i];
-        Player2.pokemons[i].front = form[0];
-        Player2.pokemons[i].back = form[1];
+        Player2.pokemons[i].form = form;
         Player2.pokemons[i].stats = stats;
         Player2.pokemons[i].sound = sound;
     }
 
-    placePokemon(Player1.pokemons[0]);
-    placePokemon(Player2.pokemons[0]);
+    placePokemon(Player1.pokemons[0], 0);
+    placePokemon(Player2.pokemons[0], 1);
 
     let currentPokemon1 = Player1.pokemons[0];
     let currentPokemon2 = Player2.pokemons[0];
@@ -174,56 +171,66 @@ async function playMatch(pokemons1, pokemons2) {
         key = e.key;
 
         if(key = "ArrowLeft") {
-            move(currentPokemon1, left);
-        }
-        else if(key = "ArrowRight") {
-            move(currentPokemon1, right);
-        }
-        else if(key = "ArrowUp") {
             attack(currentPokemon1, currentPokemon2);
         }
-        else if(key = "ArrowDown") {
+        else if(key = "ArrowRight") {
             defend(currentPokemon1, currentPokemon2);
+        }
+        else if(key = "ArrowUp") {
+            move(currentPokemon1, 0, "up");            
+        }
+        else if(key = "ArrowDown") {
+            move(currentPokemon1, 0, "down");
         }
     });
 
-    document.body.addEventListener("keydown"), (e) => {
+    document.body.addEventListener("keydown", (e) => {
         key = e.key;
 
         if(key = "A") {
-            move(currentPokemon2, left);
+            defend(currentPokemon1, currentPokemon2);
         }
         else if(key = "D") {
-            move(currentPokemon2, right);
+            attack(currentPokemon1, currentPokemon2);
         }
         else if(key = "W") {
-            attack(currentPokemon2, currentPokemon1);
+            move(currentPokemon2, 0, "up"); 
         }
         else if(key = "S") {
-            defend(currentPokemon2, currentPokemon1);
+            move(currentPokemon2, 0, "down");
         }
-    }
+    });
 
-    const winner = await gameLogic();
+    if(Player1.pokemonNumber==0 && Player2.pokemonNumber==0){showResult("draw");}
+    else if(Player1.pokemonNumber==0){showResult(Player1.name);}
+    else if(Player2.pokemonNumber==0){showResult(Player2.name);}
+}
 
-    //Winner screen
+function showResult(verdict) {
+
+}
+
+function placePokemon(pokemon, side){
+    const area = document.getElementById("fight-area");
+
+    const image = document.createElement("img");
+    image.id = `poke${Math.abs(side-1)}`;
+    image.src = pokemon.form[side];
+
+    image.style.left = (side===1)?'0rem':'36rem';
+    image.style.top = '11.5rem';  
     
-    //Replay?
+    area.appendChild(image);
 }
 
-async function gameLogic() {
-    while(true) {
-        //game logic
+function move(pokemon, id, direction) {
+    pokemon = document.getElementById(`poke${id}`);
+    if(direction==="up"){
+        //dp up
     }
-
-}
-
-function placePokemon(pokemon){
-
-}
-
-function move(pokemon, direction) {
-
+    else if(direction==="down"){
+        //do down
+    }
 }
 
 function attack(attacker, defender) {

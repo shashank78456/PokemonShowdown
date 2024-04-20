@@ -127,7 +127,14 @@ input {
     flex-direction: column;
     padding: 0;
 }
+
+#fight-area {
+    background-color: rgb(176, 220, 237);
+    width: 50rem;
+    height: 30rem;
+}
 #fight-area img{
-    width: 70rem;
-    height: 35rem;
+    position: relative;
+    width: 7rem;
+    height: 7rem;
 }

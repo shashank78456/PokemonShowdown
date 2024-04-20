@@ -67,7 +67,8 @@ async function getPokemonStats(pokemon) {
     const hp = response.stats[0].base_stat * 4;
     const attack = response.stats[1].base_stat;
     const defense = response.stats[2].base_stat;
-    const stats = [hp, attack, defense];
+    const speed = response.stats[3].base_stat;
+    const stats = { hp: hp, attack: attack, defense: defense, speed: speed };
     return new Promise((resolve) => {
         resolve(stats);
     })
