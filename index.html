@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pokemon Showdown</title>
+</head>
+<body>
+    <div class="instructions">
+        <img src="assets/imgbin_pokemon-logo-png.png">
+        <div class="head">How To Play</div>
+        <div class="content">
+            <ol>
+                <li>aaaa</li>
+                <li>bbbb</li>
+                <li>cccc</li>
+                <li>dddd</li>
+                <li>eeee</li>
+            </ol>
+        </div>
+        <div id="play-btn"><button>PLAY</button></div>
+    </div>
+    <div class="player-init">
+        <div id="player-heading">Enter Player Names</div>
+        <form name="player">
+            <input type="text" id="player1" placeholder="Player 1" required>
+            <br>
+            <input type="text" id="player2" placeholder="Player 2" required>
+            <br>
+            <button name="player-submit" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="select-pokemon">
+        <form id="selector">
+        <div id="cover">
+        <div id="player1-pokemon">
+            <div id="player1-name"></div>
+                <input id = "ipokemon11" list="pokemon11" placeholder="Pokemon 1" required>
+                <datalist id="pokemon11">
+
+                </datalist>
+
+                <input id = "ipokemon12" list="pokemon12" placeholder="Pokemon 2" required>
+                <datalist id="pokemon12">
+
+                </datalist>
+
+                <input id = "ipokemon13" list="pokemon13" placeholder="Pokemon 3" required>
+                <datalist id="pokemon13">
+
+                </datalist>
+
+        </div>
+        <div id="player2-pokemon">
+            <div id="player2-name"></div>
+                <input id = "ipokemon21" list="pokemon21" placeholder="Pokemon 1" required>
+                <datalist id="pokemon21">
+
+                </datalist>
+
+                <input id = "ipokemon22" list="pokemon22" placeholder="Pokemon 2" required>
+                <datalist id="pokemon22">
+
+                </datalist>
+
+                <input id = "ipokemon23" list="pokemon23" placeholder="Pokemon 3" required>
+                <datalist id="pokemon23">
+
+                </datalist>
+
+        </div>
+    </div>
+        <button id="go-button" type="submit">GO!!!</button>
+    </form>
+    </div>
+    <div class="main">
+        <div id="fight-area">
+            <img src="assets/RELAXING STUDIO GHIBLI COMPLETE PIANO MUSIC COLLECTION _ BEAUTIFUL ANIME VIDEO.jpeg">
+        </div>
+    </div>
+</body>
+<script src = "script.js"></script>
+<script src = "api_handler.js"></script>
+</html>

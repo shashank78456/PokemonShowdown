@@ -1,0 +1,133 @@
+html{
+    width: 100%;
+    height: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    background-image: url(assets/—Pngtree—wave\ dot\ clean\ yellow\ background_1340310.png);
+    font-family: Arial;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: orange;
+    width: 100%;
+    height: 100%;
+}
+#logo img{
+    height: 5rem;
+    width: 10rem;
+    padding: 1rem;
+}
+.instructions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    font-size: 1.3rem;
+}
+.instructions .head{
+    font-size: 3rem;
+    font-weight: 700;
+    color: orange;
+    border-radius: 1rem;
+    box-shadow: 1rem;
+    background-color: rgb(122, 72, 247);
+    padding: 1rem;
+}
+.instructions .content{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+button{
+    font-size: 1.5rem;
+    font-weight: 500;
+    background-color: rgb(34, 158, 0);
+    padding: 0.5rem;
+    padding-left: 1.7rem;
+    padding-right: 1.7rem;
+    color: white;
+    border: 0;
+    border-radius: 0.5rem;
+}
+button:hover{
+    background-color: rgb(29, 132, 0);
+    transform: scale(1.05);
+}
+.main{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+}
+.instructions img{
+    height: 16rem;
+    width: 30rem;
+}
+.player-init{
+    display: none;
+    align-self: center;
+    background-color: rgb(122, 72, 247);
+    border-radius: 1rem;
+    width: 25rem;
+}
+.player-init #player-heading{
+    color: orange;
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+    padding-top: 3rem;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.8rem;
+}
+input {
+    font-size: 1.4rem;
+    padding: 0.7rem;
+    border-radius: 1rem;
+    border: none;
+    outline: none;
+}
+.select-pokemon{
+    display: none;
+    flex-direction: column;
+    align-self: center;
+    width: 70rem;
+    justify-content: space-around;
+}
+#player1-pokemon, #player2-pokemon{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 20rem;
+    height: 20rem;
+    background-color: rgb(122, 72, 247);
+    border-radius: 1rem;
+    padding: 2rem;
+    color: orange;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+#cover{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding-bottom: 2.5rem;
+}
+.select-pokemon button{
+    align-self: center;
+    width:fit-content;
+    height: fit-content;
+}
+.select-pokemon form{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+#fight-area img{
+    width: 70rem;
+    height: 35rem;
+}
