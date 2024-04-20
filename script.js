@@ -139,7 +139,7 @@ async function playMatch(pokemons1, pokemons2) {
     document.getElementsByClassName("select-pokemon")[0].style.display = "none";
 
     document.body.style.paddingTop = "5%";
-    document.getElementsByClassName("main")[0].style.display = "block";
+    document.getElementsByClassName("main")[0].style.display = "flex";
 
     for(let i=0; i<3; i++) {
         let form = await getPokemonForm(pokemons1[i]);
@@ -161,8 +161,8 @@ async function playMatch(pokemons1, pokemons2) {
         Player2.pokemons[i].sound = sound;
     }
 
-    placePokemon(Player1.pokemons[0], 0);
-    placePokemon(Player2.pokemons[0], 1);
+    placePokemon(Player1.pokemons[0], 1);
+    placePokemon(Player2.pokemons[0], 0);
 
     let currentPokemon1 = Player1.pokemons[0];
     let currentPokemon2 = Player2.pokemons[0];
@@ -170,34 +170,28 @@ async function playMatch(pokemons1, pokemons2) {
     document.body.addEventListener("keydown", (e) => {
         key = e.key;
 
-        if(key = "ArrowLeft") {
-            attack(currentPokemon1, currentPokemon2);
+        if(key === "ArrowLeft" || key === "ArrowRight") {
+            attack(currentPokemon2,0, currentPokemon1,1);
         }
-        else if(key = "ArrowRight") {
-            defend(currentPokemon1, currentPokemon2);
+        else if(key === "ArrowUp") {
+            move(currentPokemon2, 0, "up");            
         }
-        else if(key = "ArrowUp") {
-            move(currentPokemon1, 0, "up");            
-        }
-        else if(key = "ArrowDown") {
-            move(currentPokemon1, 0, "down");
+        else if(key === "ArrowDown") {
+            move(currentPokemon2, 0, "down");
         }
     });
 
     document.body.addEventListener("keydown", (e) => {
         key = e.key;
 
-        if(key = "A") {
-            defend(currentPokemon1, currentPokemon2);
+        if(key === "a" || key === "d") {
+            attack(currentPokemon1,1, currentPokemon2,0);
         }
-        else if(key = "D") {
-            attack(currentPokemon1, currentPokemon2);
+        else if(key === "w") {
+            move(currentPokemon1, 1, "up"); 
         }
-        else if(key = "W") {
-            move(currentPokemon2, 0, "up"); 
-        }
-        else if(key = "S") {
-            move(currentPokemon2, 0, "down");
+        else if(key === "s") {
+            move(currentPokemon1, 1, "down");
         }
     });
 
@@ -214,7 +208,7 @@ function placePokemon(pokemon, side){
     const area = document.getElementById("fight-area");
 
     const image = document.createElement("img");
-    image.id = `poke${Math.abs(side-1)}`;
+    image.id = `poke${Math.abs(side)}`;
     image.src = pokemon.form[side];
 
     image.style.left = (side===1)?'0rem':'36rem';
@@ -224,21 +218,26 @@ function placePokemon(pokemon, side){
 }
 
 function move(pokemon, id, direction) {
-    pokemon = document.getElementById(`poke${id}`);
+    let pokeimg = document.getElementById(`poke${id}`);
+    let steps = (pokemon.stats.speed/100);
     if(direction==="up"){
-        //dp up
+        if(parseFloat(pokeimg.style.top.substring(0,pokeimg.style.top.length-3))>0){
+            let pos = parseFloat(pokeimg.style.top.substring(0,pokeimg.style.top.length-3)) - steps;
+            if(pos>0){pokeimg.style.top = pos + "rem";}            
+        }
     }
     else if(direction==="down"){
-        //do down
+        if(parseFloat(pokeimg.style.top.substring(0,pokeimg.style.top.length-3))<23){
+            let pos = parseFloat(pokeimg.style.top.substring(0,pokeimg.style.top.length-3)) + steps;
+            if(pos<23){pokeimg.style.top = pos + "rem";}            
+        }
     }
 }
 
-function attack(attacker, defender) {
-
-}
-
-function defend(defender, attacker) {
-
+function attack(attacker,aid, defender,did) {
+    if(Math.round(parseFloat(document.getElementById(`poke${aid}`).style.top.substring(0,document.getElementById(`poke${aid}`).style.top.length-3))) === Math.round(parseFloat(document.getElementById(`poke${did}`).style.top.substring(0,document.getElementById(`poke${did}`).style.top.length-3)))) {
+        defender.hp-=attacker.attack;
+    }
 }
 
 {/* <div id="logo">
@@ -248,9 +247,3 @@ function defend(defender, attacker) {
 
 
 Put this logo*/}
-
-    /*
-        AD leftright to move
-        W up to attack
-        S down to defend 
-    */

@@ -64,11 +64,10 @@ async function getPokemonForm(pokemon) {
 
 async function getPokemonStats(pokemon) {
     const response = await getPokemonDataAPI(pokemon);
-    const hp = response.stats[0].base_stat * 4;
+    const hp = response.stats[0].base_stat * 5;
     const attack = response.stats[1].base_stat;
-    const defense = response.stats[2].base_stat;
-    const speed = response.stats[3].base_stat;
-    const stats = { hp: hp, attack: attack, defense: defense, speed: speed };
+    const speed = response.stats[5].base_stat;
+    const stats = { hp: hp, attack: attack, speed: speed };
     return new Promise((resolve) => {
         resolve(stats);
     })
