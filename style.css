@@ -2,6 +2,7 @@ html{
     width: 100%;
     height: 100%;
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 body{
     display: flex;
@@ -13,11 +14,6 @@ body{
     background-color: orange;
     width: 100%;
     height: 100%;
-}
-#logo img{
-    height: 5rem;
-    width: 10rem;
-    padding: 1rem;
 }
 .instructions{
     display: flex;
@@ -130,7 +126,10 @@ input {
 }
 
 #fight-area {
+    display: block;
     background-color: rgb(176, 220, 237);
+    background-image: url(assets/5E495733-8707-43D3-88FF-0AA9D70F6083_4_5005_c.jpeg);
+    background-size: 50rem 30rem;
     width: 50rem;
     height: 30rem;
 }
@@ -142,6 +141,17 @@ input {
 #poke-number, #hp-bars{
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+}
+#poke-number img{
+    width: 3rem;
+    height: 3rem;
+}
+#poke1-hp , #poke2-hp {
+    color: rgb(122, 72, 247);
 }
 #player-number1, #player-number2{
     display: flex;
@@ -149,4 +159,21 @@ input {
 }
 #poke1, #poke2{
     color: black;
+}
+#results{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    width: fit-content;
+    height: 10rem;
+    font-weight: 800;
+    font-size: 2rem;
+    color: orange;
+    background-color: rgb(122, 72, 247);
+    border-radius: 0.5rem;
+    border: 1rem;
+    border-color: black;
+    padding: 1rem;
 }

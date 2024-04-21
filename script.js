@@ -138,7 +138,7 @@ async function selectPokemons() {
 async function playMatch(pokemons1, pokemons2) {
     document.getElementsByClassName("select-pokemon")[0].style.display = "none";
 
-    document.body.style.paddingTop = "5%";
+    document.body.style.paddingTop = "3%";
     document.getElementsByClassName("main")[0].style.display = "flex";
 
     for(let i=0; i<3; i++) {
@@ -161,6 +161,14 @@ async function playMatch(pokemons1, pokemons2) {
         Player2.pokemons[i].sound = sound;
     }
 
+    setTimeout(()=>{},500);
+
+    const mainArea = document.getElementsByClassName("main")[0];
+    const enter = document.createElement("div");
+    enter.innerHTML = "Press any key to Continue";
+    enter.style.fontSize = "2rem";
+    mainArea.append(enter);
+
     placePokemon(Player1.pokemons[0], 1);
     placePokemon(Player2.pokemons[0], 0);
 
@@ -169,6 +177,8 @@ async function playMatch(pokemons1, pokemons2) {
 
     document.body.addEventListener("keydown", (e) => {
         key = e.key;
+
+        enter.style.display = "none";
 
         if(key === "ArrowLeft" || key === "ArrowRight") {
             attack(currentPokemon2,0, currentPokemon1,1);
@@ -179,10 +189,6 @@ async function playMatch(pokemons1, pokemons2) {
         else if(key === "ArrowDown") {
             move(currentPokemon2, 0, "down");
         }
-    });
-
-    document.body.addEventListener("keydown", (e) => {
-        key = e.key;
 
         if(key === "a" || key === "d") {
             attack(currentPokemon1,1, currentPokemon2,0);
@@ -193,15 +199,49 @@ async function playMatch(pokemons1, pokemons2) {
         else if(key === "s") {
             move(currentPokemon1, 1, "down");
         }
-    });
 
-    if(Player1.pokemonNumber==0 && Player2.pokemonNumber==0){showResult("draw");}
-    else if(Player1.pokemonNumber==0){showResult(Player1.name);}
-    else if(Player2.pokemonNumber==0){showResult(Player2.name);}
+        const poke1Name = document.getElementById("poke1-name");
+        const hpBar1 = document.getElementById("poke1-hp");
+        const hpBar2 = document.getElementById("poke2-hp");
+        const poke2Name = document.getElementById("poke2-name");
+
+        
+        poke1Name.innerHTML = currentPokemon1.name.toUpperCase();
+        hpBar1.innerHTML = `${currentPokemon1.stats.hp} HP`;
+        poke2Name.innerHTML = currentPokemon2.name.toUpperCase();
+        hpBar2.innerHTML = `${currentPokemon2.stats.hp} HP`;
+
+        if(currentPokemon1.stats.hp===0 && Player1.pokemonNumber>0){
+            Player1.pokemonNumber-=1;
+            removePokemon(1);
+            document.getElementById("player-number1").removeChild(document.getElementById(`1ball${Player1.pokemonNumber+1}`))
+            currentPokemon1 = Player1.pokemons[Player1.pokemonNumber];
+            if(Player1.pokemonNumber!=0){placePokemon(currentPokemon1, 1);}
+        }
+        if(currentPokemon2.stats.hp===0 && Player2.pokemonNumber>0){
+            Player2.pokemonNumber-=1;
+            removePokemon(0);
+            document.getElementById("player-number2").removeChild(document.getElementById(`2ball${Player2.pokemonNumber+1}`))
+            currentPokemon2 = Player2.pokemons[Player2.pokemonNumber];
+            if(Player2.pokemonNumber!=0){placePokemon(currentPokemon2, 0);}
+        }
+
+        if(Player1.pokemonNumber===0 && Player2.pokemonNumber===0){showResult("draw");}
+        else if(Player1.pokemonNumber===0){showResult(Player2.name);}
+        else if(Player2.pokemonNumber===0){showResult(Player1.name);}
+    });
 }
 
 function showResult(verdict) {
-
+    document.getElementById("fight-area").style.display = "none";
+    document.getElementById("poke-number").style.display = "none";
+    document.getElementById("hp-bars").style.display = "none";
+    const results  = document.getElementById("results");
+    results.style.display = "flex";
+    results.innerHTML = "DRAW"
+    if(verdict===Player1.name || verdict===Player2.name) {
+        results.innerHTML = `${verdict} is the Winner!!!`;
+    }
 }
 
 function placePokemon(pokemon, side){
@@ -215,6 +255,12 @@ function placePokemon(pokemon, side){
     image.style.top = '11.5rem';  
     
     area.appendChild(image);
+}
+
+function removePokemon(id) {
+    const area = document.getElementById("fight-area");
+    const pokemon = document.getElementById(`poke${id}`);
+    area.removeChild(pokemon);
 }
 
 function move(pokemon, id, direction) {
@@ -235,15 +281,9 @@ function move(pokemon, id, direction) {
 }
 
 function attack(attacker,aid, defender,did) {
-    if(Math.round(parseFloat(document.getElementById(`poke${aid}`).style.top.substring(0,document.getElementById(`poke${aid}`).style.top.length-3))) === Math.round(parseFloat(document.getElementById(`poke${did}`).style.top.substring(0,document.getElementById(`poke${did}`).style.top.length-3)))) {
-        defender.hp-=attacker.attack;
+    if(Math.abs(Math.round(parseFloat((document.getElementById(`poke${aid}`).style.top.substring(0,document.getElementById(`poke${aid}`).style.top.length-3))) - Math.round(parseFloat(document.getElementById(`poke${did}`).style.top.substring(0,document.getElementById(`poke${did}`).style.top.length-3)))))<=1.5) {
+        defender.stats.hp-=attacker.stats.attack;
+        if(defender.stats.hp<0){defender.stats.hp=0;}
     }
 }
 
-{/* <div id="logo">
-<img src="assets/imgbin_pokemon-logo-png.png">
-</div> 
-
-
-
-Put this logo*/}
