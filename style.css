@@ -177,3 +177,6 @@ input {
     border-color: black;
     padding: 1rem;
 }
+#replay{
+    display: none;
+}

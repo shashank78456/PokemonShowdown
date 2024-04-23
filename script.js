@@ -141,6 +141,12 @@ async function playMatch(pokemons1, pokemons2) {
     document.body.style.paddingTop = "3%";
     document.getElementsByClassName("main")[0].style.display = "flex";
 
+    const mainarea = document.getElementsByClassName("main")[0];
+    const wait = document.createElement("div");
+    wait.innerHTML = "Loading... Please Wait";
+    wait.style.fontSize = "2rem";
+    mainarea.append(wait);
+
     for(let i=0; i<3; i++) {
         let form = await getPokemonForm(pokemons1[i]);
         let stats = await getPokemonStats(pokemons1[i]);
@@ -162,6 +168,8 @@ async function playMatch(pokemons1, pokemons2) {
     }
 
     setTimeout(()=>{},500);
+
+    mainarea.removeChild(wait);
 
     const mainArea = document.getElementsByClassName("main")[0];
     const enter = document.createElement("div");
@@ -238,10 +246,20 @@ function showResult(verdict) {
     document.getElementById("hp-bars").style.display = "none";
     const results  = document.getElementById("results");
     results.style.display = "flex";
-    results.innerHTML = "DRAW"
+    results.innerHTML = "DRAW";
     if(verdict===Player1.name || verdict===Player2.name) {
         results.innerHTML = `${verdict} is the Winner!!!`;
     }
+    const replay  = document.getElementById("replay");
+    replay.style.display = "flex";
+    replay.style.padding = "2rem";
+    replay.style.fontSize = "1.5rem";
+    replay.innerHTML = "Press Enter to Replay";
+
+    document.body.addEventListener("keydown", (e) => {
+        key = e.key;
+        if(key==="Enter"){location.reload();}
+    } )
 }
 
 function placePokemon(pokemon, side){
