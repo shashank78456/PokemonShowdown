@@ -147,8 +147,8 @@ input {
     text-align: center;
 }
 #poke-number img{
-    width: 3rem;
-    height: 3rem;
+    width: 4rem;
+    height: 4rem;
 }
 #poke1-hp , #poke2-hp {
     color: rgb(122, 72, 247);
@@ -179,4 +179,14 @@ input {
 }
 #replay{
     display: none;
+}
+#ball{
+    display: none;
+    position: absolute;
+}
+#movement{
+    position: absolute;
+    width: 36rem;
+    height: 30rem;
+    left: 10.5rem;
 }

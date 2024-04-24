@@ -167,6 +167,13 @@ async function playMatch(pokemons1, pokemons2) {
         Player2.pokemons[i].sound = sound;
     }
 
+    document.getElementById("1ball1").src = Player1.pokemons[1].form[1];
+    document.getElementById("1ball2").src = Player1.pokemons[2].form[1];
+
+
+    document.getElementById("2ball1").src = Player2.pokemons[1].form[0];
+    document.getElementById("2ball2").src = Player2.pokemons[2].form[0];
+
     setTimeout(()=>{},500);
 
     mainarea.removeChild(wait);
@@ -177,8 +184,8 @@ async function playMatch(pokemons1, pokemons2) {
     enter.style.fontSize = "2rem";
     mainArea.append(enter);
 
-    placePokemon(Player1.pokemons[0], 1);
-    placePokemon(Player2.pokemons[0], 0);
+    placePokemon(Player1.pokemons[0], 1, true);
+    placePokemon(Player2.pokemons[0], 0, true);
 
     let currentPokemon1 = Player1.pokemons[0];
     let currentPokemon2 = Player2.pokemons[0];
@@ -222,16 +229,16 @@ async function playMatch(pokemons1, pokemons2) {
         if(currentPokemon1.stats.hp===0 && Player1.pokemonNumber>0){
             Player1.pokemonNumber-=1;
             removePokemon(1);
-            document.getElementById("player-number1").removeChild(document.getElementById(`1ball${Player1.pokemonNumber+1}`))
+            if(Player1.pokemonNumber!==0){document.getElementById("player-number1").removeChild(document.getElementById(`1ball${Player1.pokemonNumber}`));}
             currentPokemon1 = Player1.pokemons[Player1.pokemonNumber];
-            if(Player1.pokemonNumber!=0){placePokemon(currentPokemon1, 1);}
+            if(Player1.pokemonNumber!=0){placePokemon(currentPokemon1, 1, false);}
         }
         if(currentPokemon2.stats.hp===0 && Player2.pokemonNumber>0){
             Player2.pokemonNumber-=1;
             removePokemon(0);
-            document.getElementById("player-number2").removeChild(document.getElementById(`2ball${Player2.pokemonNumber+1}`))
+            if(Player2.pokemonNumber!==0){document.getElementById("player-number2").removeChild(document.getElementById(`2ball${Player2.pokemonNumber}`));}
             currentPokemon2 = Player2.pokemons[Player2.pokemonNumber];
-            if(Player2.pokemonNumber!=0){placePokemon(currentPokemon2, 0);}
+            if(Player2.pokemonNumber!=0){placePokemon(currentPokemon2, 0, false);}
         }
 
         if(Player1.pokemonNumber===0 && Player2.pokemonNumber===0){showResult("draw");}
@@ -262,7 +269,7 @@ function showResult(verdict) {
     } )
 }
 
-function placePokemon(pokemon, side){
+function placePokemon(pokemon, side, first){
     const area = document.getElementById("fight-area");
 
     const image = document.createElement("img");
@@ -270,7 +277,7 @@ function placePokemon(pokemon, side){
     image.src = pokemon.form[side];
 
     image.style.left = (side===1)?'0rem':'36rem';
-    image.style.top = '11.5rem';  
+    image.style.top = '11.5rem';
     
     area.appendChild(image);
 }
@@ -299,9 +306,28 @@ function move(pokemon, id, direction) {
 }
 
 function attack(attacker,aid, defender,did) {
+    let start = (aid===1)?2:34;
+    let end = (aid===1)?34:2;
+    throwBall(start, end, parseFloat((document.getElementById(`poke${aid}`).style.top.substring(0,document.getElementById(`poke${aid}`).style.top.length-3))));
     if(Math.abs(Math.round(parseFloat((document.getElementById(`poke${aid}`).style.top.substring(0,document.getElementById(`poke${aid}`).style.top.length-3))) - Math.round(parseFloat(document.getElementById(`poke${did}`).style.top.substring(0,document.getElementById(`poke${did}`).style.top.length-3)))))<=1.5) {
         defender.stats.hp-=attacker.stats.attack;
         if(defender.stats.hp<0){defender.stats.hp=0;}
+    }
+}
+
+function throwBall(start, end, top) {
+    const ball = document.getElementById("ball");
+    ball.style.display = "block";
+    ball.style.top = `${top+3.5}rem`;
+    ball.style.width = `2rem`;
+    ball.style.height = `2rem`;
+    if(start<end){
+        let i = start;
+        let animation = setInterval(()=>{i++; console.log(i); ball.style.left = `${i}rem`;         if(i>=end){clearInterval(animation);        ball.style.display = "none";}}, 50);
+    }
+    else { 
+        let i = start;
+        let animation = setInterval(()=>{i--; console.log(i); ball.style.left = `${i}rem`;        if(i<=end){clearInterval(animation);        ball.style.display = "none";}}, 50);
     }
 }
 
