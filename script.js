@@ -184,8 +184,8 @@ async function playMatch(pokemons1, pokemons2) {
     enter.style.fontSize = "2rem";
     mainArea.append(enter);
 
-    placePokemon(Player1.pokemons[0], 1, true);
-    placePokemon(Player2.pokemons[0], 0, true);
+    placePokemon(Player1.pokemons[0], 1);
+    placePokemon(Player2.pokemons[0], 0);
 
     let currentPokemon1 = Player1.pokemons[0];
     let currentPokemon2 = Player2.pokemons[0];
@@ -231,14 +231,14 @@ async function playMatch(pokemons1, pokemons2) {
             removePokemon(1);
             if(Player1.pokemonNumber!==0){document.getElementById("player-number1").removeChild(document.getElementById(`1ball${Player1.pokemonNumber}`));}
             currentPokemon1 = Player1.pokemons[Player1.pokemonNumber];
-            if(Player1.pokemonNumber!=0){placePokemon(currentPokemon1, 1, false);}
+            if(Player1.pokemonNumber!=0){placePokemon(currentPokemon1, 1);}
         }
         if(currentPokemon2.stats.hp===0 && Player2.pokemonNumber>0){
             Player2.pokemonNumber-=1;
             removePokemon(0);
             if(Player2.pokemonNumber!==0){document.getElementById("player-number2").removeChild(document.getElementById(`2ball${Player2.pokemonNumber}`));}
             currentPokemon2 = Player2.pokemons[Player2.pokemonNumber];
-            if(Player2.pokemonNumber!=0){placePokemon(currentPokemon2, 0, false);}
+            if(Player2.pokemonNumber!=0){placePokemon(currentPokemon2, 0);}
         }
 
         if(Player1.pokemonNumber===0 && Player2.pokemonNumber===0){showResult("draw");}
@@ -269,21 +269,20 @@ function showResult(verdict) {
     } )
 }
 
-function placePokemon(pokemon, side, first){
-    const area = document.getElementById("fight-area");
+function placePokemon(pokemon, side){
+    const area = document.getElementById(`area${side}`);
 
     const image = document.createElement("img");
-    image.id = `poke${Math.abs(side)}`;
+    image.id = `poke${side}`;
     image.src = pokemon.form[side];
 
-    image.style.left = (side===1)?'0rem':'36rem';
     image.style.top = '11.5rem';
     
     area.appendChild(image);
 }
 
 function removePokemon(id) {
-    const area = document.getElementById("fight-area");
+    const area = document.getElementById(`area${id}`);
     const pokemon = document.getElementById(`poke${id}`);
     area.removeChild(pokemon);
 }
@@ -306,8 +305,8 @@ function move(pokemon, id, direction) {
 }
 
 function attack(attacker,aid, defender,did) {
-    let start = (aid===1)?2:34;
-    let end = (aid===1)?34:2;
+    let start = (aid===1)?0:36;
+    let end = (aid===1)?36:0;
     throwBall(start, end, parseFloat((document.getElementById(`poke${aid}`).style.top.substring(0,document.getElementById(`poke${aid}`).style.top.length-3))));
     if(Math.abs(Math.round(parseFloat((document.getElementById(`poke${aid}`).style.top.substring(0,document.getElementById(`poke${aid}`).style.top.length-3))) - Math.round(parseFloat(document.getElementById(`poke${did}`).style.top.substring(0,document.getElementById(`poke${did}`).style.top.length-3)))))<=1.5) {
         defender.stats.hp-=attacker.stats.attack;
@@ -323,11 +322,11 @@ function throwBall(start, end, top) {
     ball.style.height = `2rem`;
     if(start<end){
         let i = start;
-        let animation = setInterval(()=>{i++; console.log(i); ball.style.left = `${i}rem`;         if(i>=end){clearInterval(animation);        ball.style.display = "none";}}, 50);
+        let animation = setInterval(()=>{i++; console.log(i); ball.style.left = `${i}rem`;if(i>=end){clearInterval(animation);ball.style.display = "none";}}, 20);
     }
     else { 
         let i = start;
-        let animation = setInterval(()=>{i--; console.log(i); ball.style.left = `${i}rem`;        if(i<=end){clearInterval(animation);        ball.style.display = "none";}}, 50);
+        let animation = setInterval(()=>{i--; console.log(i); ball.style.left = `${i}rem`;if(i<=end){clearInterval(animation);ball.style.display = "none";}}, 20);
     }
 }
 

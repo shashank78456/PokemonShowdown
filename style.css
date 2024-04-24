@@ -126,7 +126,8 @@ input {
 }
 
 #fight-area {
-    display: block;
+    display: flex;
+    flex-direction: row;
     background-color: rgb(176, 220, 237);
     background-image: url(assets/5E495733-8707-43D3-88FF-0AA9D70F6083_4_5005_c.jpeg);
     background-size: 50rem 30rem;
@@ -184,9 +185,11 @@ input {
     display: none;
     position: absolute;
 }
+#area1, #area0{
+    width: 7rem;
+    height: 30rem;
+}
 #movement{
-    position: absolute;
     width: 36rem;
     height: 30rem;
-    left: 10.5rem;
 }
