@@ -1,4 +1,4 @@
-import {getPokemonForm,getPokemonList,getPokemonStats} from "/api_handler.js";
+import {getPokemonForm,getPokemonList,getPokemonStats} from "./api_handler.js";
 
 class Pokemon {
     constructor(name, form, stats){
