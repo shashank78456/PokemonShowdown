@@ -15,14 +15,17 @@ class Player {
     }
 }
 
-let Pokemon11 = new Pokemon();
-let Pokemon12 = new Pokemon();
-let Pokemon13 = new Pokemon();
-let Pokemon21 = new Pokemon();
-let Pokemon22 = new Pokemon();
-let Pokemon23 = new Pokemon();
-let Player1 = new Player(null, [Pokemon11, Pokemon12, Pokemon13]);
-let Player2 = new Player(null, [Pokemon21, Pokemon22, Pokemon23]);
+let list1 = [];
+let list2 = [];
+for(let i=0; i<3; i++) {
+    list1.push(new Pokemon());
+}
+for(let i=0; i<3; i++) {
+    list2.push(new Pokemon());
+}
+
+let Player1 = new Player(null, list1);
+let Player2 = new Player(null, list2);
 
 document.getElementById("play-btn").addEventListener("click",startGame);
 
@@ -37,9 +40,7 @@ function startGame() {
         event.preventDefault();
         const player1name = document.getElementById("player1").value;
         const player2name = document.getElementById("player2").value;
-        if(player1name===null || player2name==null) {
 
-        }
         Player1.name = player1name;
         Player2.name = player2name;
         document.getElementsByClassName("player-init")[0].style.display = "none";
@@ -56,62 +57,38 @@ async function selectPokemons() {
     document.getElementById("player2-name").style.color = "orange";  
     
     const pokelist = await getPokemonList();
-    for(let i=0; i<pokelist.length; i++) {
-        let pokemon = pokelist[i];
-        let opt = document.createElement("option");
-        opt.value = pokemon;
-        opt.text = pokemon;
-        document.getElementById("pokemon11").append(opt);
-    }
-    for(let i=0; i<pokelist.length; i++) {
-        let pokemon = pokelist[i];
-        let opt = document.createElement("option");
-        opt.value = pokemon;
-        opt.text = pokemon;
-        document.getElementById("pokemon12").append(opt);
-    }
-    for(let i=0; i<pokelist.length; i++) {
-        let pokemon = pokelist[i];
-        let opt = document.createElement("option");
-        opt.value = pokemon;
-        opt.text = pokemon;
-        document.getElementById("pokemon13").append(opt);
-    }
-    for(let i=0; i<pokelist.length; i++) {
-        let pokemon = pokelist[i];
-        let opt = document.createElement("option");
-        opt.value = pokemon;
-        opt.text = pokemon;
-        document.getElementById("pokemon21").append(opt);
-    }
-    for(let i=0; i<pokelist.length; i++) {
-        let pokemon = pokelist[i];
-        let opt = document.createElement("option");
-        opt.value = pokemon;
-        opt.text = pokemon;
-        document.getElementById("pokemon22").append(opt);
-    }
-    for(let i=0; i<pokelist.length; i++) {
-        let pokemon = pokelist[i];
-        let opt = document.createElement("option");
-        opt.value = pokemon;
-        opt.text = pokemon;
-        document.getElementById("pokemon23").append(opt);
+
+    for(let j=1; j<=2; j++) {
+        for(let k=1; k<=3; k++) {
+            for(let i=0; i<pokelist.length; i++) {
+                let pokemon = pokelist[i];
+                let opt = document.createElement("option");
+                opt.value = pokemon;
+                opt.text = pokemon;
+                document.getElementById(`pokemon${j}${k}`).append(opt);
+            }
+        }
     }
 
     document.getElementById("selector").addEventListener("submit", (event) => {
 
         event.preventDefault();
-        let pokemon11 = document.getElementById("ipokemon11").value;
-        let pokemon12 = document.getElementById("ipokemon12").value;
-        let pokemon13 = document.getElementById("ipokemon13").value;
-        let pokemon21 = document.getElementById("ipokemon21").value;
-        let pokemon22 = document.getElementById("ipokemon22").value;
-        let pokemon23 = document.getElementById("ipokemon23").value;
 
-        if (pokelist.includes(pokemon11) && pokelist.includes(pokemon12) && pokelist.includes(pokemon13) && pokelist.includes(pokemon21) && pokelist.includes(pokemon22) && pokelist.includes(pokemon23)) {
-            const pokemons1 = [pokemon11, pokemon12, pokemon13];
-            const pokemons2 = [pokemon21, pokemon22, pokemon23];
+        let flag = true;
+        let pokemon_arr = [[],[]];
+        for(let i=0; i<2; i++) {
+            for(let j=0; j<3; j++) {
+                if(!pokelist.includes(document.getElementById(`ipokemon${i+1}${j+1}`).value)) {
+                    flag=false;
+                    break;
+                }
+                pokemon_arr[i].push(document.getElementById(`ipokemon${i+1}${j+1}`).value);
+            }
+        }
+
+        if (flag) {
+            const pokemons1 = pokemon_arr[0];
+            const pokemons2 = pokemon_arr[1];
             playMatch(pokemons1, pokemons2);
         }
         else{
