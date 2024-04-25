@@ -109,23 +109,9 @@ async function selectPokemons() {
         let pokemon22 = document.getElementById("ipokemon22").value;
         let pokemon23 = document.getElementById("ipokemon23").value;
 
-        let flag = false;
-        for(i of pokelist) {if(pokemon11===i){flag=true;break;}else{flag=false;}}
-        if(flag) {
-        for(i of pokelist) {if(pokemon12===i){flag=true;break;}else{flag=false;}}
-        if(flag) {
-        for(i of pokelist) {if(pokemon13===i){flag=true;break;}else{flag=false;}}
-        if(flag) {
-        for(i of pokelist) {if(pokemon21===i){flag=true;break;}else{flag=false;}}
-        if(flag) {
-        for(i of pokelist) {if(pokemon22===i){flag=true;break;}else{flag=false;}}
-        if(flag) {
-        for(i of pokelist) {if(pokemon23===i){flag=true;break;}else{flag=false;}}
-        }}}}}
-
-        const pokemons1 = [pokemon11, pokemon12, pokemon13];
-        const pokemons2 = [pokemon21, pokemon22, pokemon23];
-        if(flag) {
+        if (pokelist.includes(pokemon11) && pokelist.includes(pokemon12) && pokelist.includes(pokemon13) && pokelist.includes(pokemon21) && pokelist.includes(pokemon22) && pokelist.includes(pokemon23)) {
+            const pokemons1 = [pokemon11, pokemon12, pokemon13];
+            const pokemons2 = [pokemon21, pokemon22, pokemon23];
             playMatch(pokemons1, pokemons2);
         }
         else{
@@ -191,7 +177,7 @@ async function playMatch(pokemons1, pokemons2) {
     let currentPokemon2 = Player2.pokemons[0];
 
     document.body.addEventListener("keydown", (e) => {
-        key = e.key;
+        let key = e.key;
 
         enter.style.display = "none";
 
@@ -264,7 +250,7 @@ function showResult(verdict) {
     replay.innerHTML = "Press Enter to Replay";
 
     document.body.addEventListener("keydown", (e) => {
-        key = e.key;
+        let key = e.key;
         if(key==="Enter"){location.reload();}
     } )
 }
@@ -322,11 +308,11 @@ function throwBall(start, end, top) {
     ball.style.height = `2rem`;
     if(start<end){
         let i = start;
-        let animation = setInterval(()=>{i++; console.log(i); ball.style.left = `${i}rem`;if(i>=end){clearInterval(animation);ball.style.display = "none";}}, 20);
+        let animation = setInterval(()=>{i++; ball.style.left = `${i}rem`;if(i>=end){clearInterval(animation);ball.style.display = "none";}}, 20);
     }
     else { 
         let i = start;
-        let animation = setInterval(()=>{i--; console.log(i); ball.style.left = `${i}rem`;if(i<=end){clearInterval(animation);ball.style.display = "none";}}, 20);
+        let animation = setInterval(()=>{i--; ball.style.left = `${i}rem`;if(i<=end){clearInterval(animation);ball.style.display = "none";}}, 20);
     }
 }
 

@@ -7,7 +7,6 @@ async function getPokemonDataAPI(pokemon) {
         }
         resolve(response.json());
     })
-    .then(data => console.log(data))
     .catch(error => console.error("Problem with fetch", error));
     });
 }
@@ -21,7 +20,6 @@ async function getPokemonListAPI() {
         }
         resolve(response.json());
     })
-    .then(data => console.log(data))
     .catch(error => console.error("Problem with fetch", error));
     });
 }
@@ -35,15 +33,14 @@ async function getPokemonFormAPI(pokemon) {
         }
         return resolve(response.json());
     })
-    .then(data => console.log(data))
     .catch(error => console.error("Problem with fetch", error));
     });
 }
 
 async function getPokemonList() {
-    pokelist = [];
+    let pokelist = [];
     const response = await getPokemonListAPI();
-    dictList = response.results;
+    const dictList = response.results;
     return new Promise((resolve) => {
     for(let i=0; i<dictList.length; i++) {
         pokelist.push(dictList[i].name);
