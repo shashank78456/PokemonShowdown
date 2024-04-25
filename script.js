@@ -1,9 +1,10 @@
+import {getPokemonForm,getPokemonList,getPokemonStats} from "/api_handler.js";
+
 class Pokemon {
-    constructor(name, form, stats, sound){
+    constructor(name, form, stats){
         this.name = name;
         this.form = form;
         this.stats = stats;
-        this.sound = sound;
     }
 }
 
@@ -113,21 +114,16 @@ async function playMatch(pokemons1, pokemons2) {
     for(let i=0; i<3; i++) {
         let form = await getPokemonForm(pokemons1[i]);
         let stats = await getPokemonStats(pokemons1[i]);
-        let sound = await getPokemonSound(pokemons1[i]);
         Player1.pokemons[i].name = pokemons1[i];
         Player1.pokemons[i].form = form;
         Player1.pokemons[i].stats = stats;
-        Player1.pokemons[i].sound = sound;
-
     }
     for(let i=0; i<3; i++) {
         let form = await getPokemonForm(pokemons2[i]);
         let stats = await getPokemonStats(pokemons2[i]);
-        let sound = await getPokemonSound(pokemons2[i]);
         Player2.pokemons[i].name = pokemons2[i];
         Player2.pokemons[i].form = form;
         Player2.pokemons[i].stats = stats;
-        Player2.pokemons[i].sound = sound;
     }
 
     document.getElementById("1ball1").src = Player1.pokemons[1].form[1];

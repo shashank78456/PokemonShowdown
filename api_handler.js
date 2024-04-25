@@ -70,10 +70,4 @@ async function getPokemonStats(pokemon) {
     })
 } 
 
-async function getPokemonSound(pokemon) {
-    const response = await getPokemonDataAPI(pokemon);
-    const sound = response.cries.legacy;
-    return new Promise((resolve) => {
-        resolve(sound);
-    })
-}
+export {getPokemonList,getPokemonForm,getPokemonStats};
